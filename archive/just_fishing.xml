@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE Profile [
+<!ENTITY MinFish "7"> 		<!-- Minimum amount of fish to catch before changing spots. -->
+<!ENTITY MaxFish "15"> 		<!-- Maximum amount of fish to catch before changing spots -->
+<!ENTITY Sit "True"> 		<!-- Set this to "True" if you want to sit while fishing. -->
+
+<!-- Set fish to desired number to farm  -->
+<!ENTITY Aethero "1">		<!-- Aetherochemical Compound #666 -->
+
+]>
+<Profile>
+	<Name>AFK Fishing Stuff</Name>
+	<KillRadius>90</KillRadius>
+	<Order>
+		<RunCode Name="Disable_Flight"/>
+		<If Condition="ClassName != ClassJobType.Fisher">
+			<ChangeClass Job="Fisher"/>
+		</If>
+		<If Condition="ClassName == ClassJobType.Fisher">
+			<WaitTimer WaitTime="2"/>
+			<AutoInventoryEquip/>
+			<If Condition="&Aethero; > 0 and not NqHasAtLeast(16752,&Aethero;)">
+				<While Condition="not NqHasAtLeast(16752,&Aethero;)">
+					<If Condition="not HasAtLeast(29717,10)">
+						<GetTo ZoneId="74" XYZ="-246.1743, 16.2, 40.10863"/>
+						<BuyItem ItemId="2586" ItemCount="50" DialogOption="2" NpcId="1003254" XYZ="-246.6011, 16.2, 37.12512"/>
+					</If>
+					<LisbethTravel Zone="74" XYZ="383.2889, -52.46049, -796.2454" />
+					<WaitTimer WaitTime="2"/>
+					<ExFish Stealth="True" Mooch="1" Bait="Versatile Lure" MinFish="10" MaxFish="15" ShuffleFishSpots="True" Condition="not NqHasAtLeast(16752,&Aethero;)">
+						<!-- Aetherochemical Compound #666 -->
+						<FishSpots>
+							<FishSpot XYZ="383.2889, -52.46049, -796.2454" Heading="0.8303008" />
+							<FishSpot XYZ="407.3812, -53.09667, -756.623" Heading="3.07968" />
+							<FishSpot XYZ="437.2029, -53.42051, -785.9421" Heading="5.42331" />
+						</FishSpots>
+					</ExFish>
+				</While>
+				<If Condition="NqHasAtLeast(4963,1)">
+					<AutoInventoryEquip/>
+					<WaitTimer WaitTime="2"/>
+					<RunCode Name="Dismount"/>
+					<WaitTimer WaitTime="2"/>
+					<RunCode Name="Desynth"/>
+				</If>
+			</If>
+		</If>
+	</Order>
+	<GrindAreas>
+	</GrindAreas>
+	<CodeChunks>
+        <!--<CodeChunk Name="Disable_Flight">
+			<![CDATA[
+				foreach (var plugin in PluginManager.Plugins.Where(p => p.Plugin.Name == "Enable Flight" || p.Plugin.Name == "启用飞行"))
+				{
+				try
+				{
+				if (!plugin.Enabled)  {  break;  }  else  {  plugin.Enabled = false;  }
+				}
+				catch (Exception ex) {  }
+				}
+			]]>
+		</CodeChunk>-->
+        <CodeChunk Name="Dismount">
+			<![CDATA[ 
+				ff14bot.Managers.ActionManager.Dismount();
+			]]>
+		</CodeChunk>
+        <CodeChunk Name="Desynth">
+			<![CDATA[
+            Logging.Write("[Desynth] Calling");
+            IEnumerable<BagSlot> fish = InventoryManager.FilledSlots
+                                                        .Where(bs => bs.IsDesynthesizable && bs.Item.Rarity < 2 && bs.Item.EquipmentCatagory == ItemUiCategory.Seafood && bs.Item.StackSize == 999)
+                                                        .OrderBy(x => x.Item.ItemLevel);
+            await LlamaLibrary.Reduce.Reduce.Desynth(fish);
+			]]>
+		</CodeChunk>
+    
+		<!--
+        <CodeChunk name="Leave">
+			<![CDATA[
+            if (DutyManager.InInstance)
+            {
+                DutyManager.LeaveActiveDuty();
+                if (await Coroutine.Wait(30000, () => CommonBehaviors.IsLoading))
+                {
+                    await Coroutine.Yield();
+                    await Coroutine.Wait(Timeout.Infinite, () => !CommonBehaviors.IsLoading);
+                    await Coroutine.Sleep(1000);
+                }
+            }
+			]]>
+		</CodeChunk>
+		<CodeChunk Name="TurnIn">
+			<![CDATA[
+				Logging.Write("[Handin] calling");
+				await LlamaLibrary.IshgardHandinBase.Handin();
+			]]>
+		</CodeChunk>		
+		<CodeChunk Name="Sneak">
+			<![CDATA[ SpellData data;
+				if (!Core.Me.HasAura(47) && ActionManager.CurrentActions.TryGetValue(305, out data) && ActionManager.CanCast(data, Core.Me)) ActionManager.DoAction(305, Core.Me);
+			]]>
+		</CodeChunk>
+		<CodeChunk Name="DisableMount">
+			<![CDATA[
+				ff14bot.Settings.CharacterSettings.Instance.UseMount = false;
+			]]>
+		</CodeChunk>		
+		<CodeChunk Name="CSManual">
+			<![CDATA[
+				var _CSManual = InventoryManager.FilledSlots.FirstOrDefault(r => r.RawItemId == 12668);
+				await Coroutine.Sleep(2000);
+				if (_CSManual != null)  {  _CSManual.UseItem();  }
+				await Coroutine.Sleep(5000);
+			]]>
+		</CodeChunk>
+		<CodeChunk Name="RSManual">
+			<![CDATA[
+				var _RSManual = InventoryManager.FilledSlots.FirstOrDefault(r => r.RawItemId == 26553);
+				await Coroutine.Sleep(2000);
+				if (_RSManual != null)  {  _RSManual.UseItem();  }
+				await Coroutine.Sleep(5000);
+			]]>
+		</CodeChunk>
+		<CodeChunk Name="EnableMount">
+			<![CDATA[
+				ff14bot.Settings.CharacterSettings.Instance.UseMount = true;
+			]]>
+		</CodeChunk>		
+		<CodeChunk Name="TruthOfOceans">
+			<![CDATA[
+				await Buddy.Coroutines.Coroutine.Sleep(2000);
+				if(!Core.Player.HasAura(1173))	{	ff14bot.Managers.ActionManager.DoAction(7911, Core.Player);
+				await Buddy.Coroutines.Coroutine.Sleep(2000);	}	
+			]]>
+		</CodeChunk>
+		<CodeChunk Name="Fathom">
+			<![CDATA[
+				await Buddy.Coroutines.Coroutine.Sleep(2000);
+				if(!Core.Player.HasAura(1166))	{	ff14bot.Managers.ActionManager.DoAction(7903, Core.Player);
+				await Buddy.Coroutines.Coroutine.Sleep(2000);	}	
+			]]>
+		</CodeChunk>
+		<CodeChunk Name="GoSwimming">
+			<![CDATA[	
+				var esc = new Vector3(-556.7548f, -50.22544f, 665.1617f);
+				await Buddy.Coroutines.Coroutine.Sleep(1000);
+				Navigator.PlayerMover.MoveTowards(esc);
+				await Buddy.Coroutines.Coroutine.Sleep(10000);
+				Navigator.PlayerMover.MoveStop();	
+			]]>
+		</CodeChunk>
+		<CodeChunk Name="Move_Forward">
+			<![CDATA[
+				await Coroutine.Sleep(500);
+				MovementManager.SetFacing(3.76f);
+				await Coroutine.Sleep(500);
+				MovementManager.MoveForwardStart();
+				await Coroutine.Sleep(3000);
+				MovementManager.MoveStop();
+				await Coroutine.Sleep(500);
+			]]>
+		</CodeChunk>
+		<CodeChunk Name="SwitchDoHJob">
+			<![CDATA[ 
+				var DoH = Enumerable.Range(8, 7);
+				var gearSets = GearsetManager.GearSets.Where(i => i.InUse && DoH.Contains((int)i.Class) && Core.Player.Levels[i.Class] > 29);
+
+				if (gearSets.Any())
+				{
+					gearSets.First().Activate();
+					await Coroutine.Sleep(2000);
+				}
+			]]>
+		</CodeChunk>-->
+	</CodeChunks>
+</Profile>

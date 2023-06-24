@@ -1,0 +1,36 @@
+<!--
+
+foreach(var item in DataManager.AetheryteCache)
+{
+Log("Id:{0} Location:{1}",item.Key,item.Value);
+}
+
+Log("{0}-{1}",Core.Target,Core.Target.NpcId);
+string str = String.Format("<HotSpot XYZ=\"{0},{1},{2}\" Radius=\"75\" />",Core.Target.Location.X,Core.Target.Location.Y,Core.Target.Location.Z);
+Log(str);
+
+https://garlandtools.org/db/
+-->
+
+<Profile>
+
+	<Name>Egg of Elpis</Name>
+
+	<Order>
+		<!-- <LisbethTravel Area="Thavnair" Position="-26.3219, 31.24215, 429.9534"/> -->
+
+		<Grind while="not HasAtLeast(36256, 99)" grindRef="Egg of Elpis"/>
+	</Order>
+
+	<GrindAreas>
+		<GrindArea name="Egg of Elpis">
+			<Hotspots>
+				<Hotspot Radius="500" XYZ="380.9536,-2.809608,197.3547" />
+			</Hotspots>
+			<TargetMobs>
+				<TargetMob id="10597"  />
+			</TargetMobs>
+		</GrindArea>
+	</GrindAreas>
+
+</Profile>

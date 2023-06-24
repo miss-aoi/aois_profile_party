@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Profile [
+  <!-- 
+    This will trade all the Tarnished Gordian items in for gear
+    Then turn that gear in for Grand Comapny Seals
+    And finally use those Seals to buy GC thingies
+    To minimize travel you'll want at least 55 spaces free in inventory
+    Author: Miss-Aoi
+  -->
+  
+  <!-- 
+    21072 (Venture)
+    21800 (Glamour Prism)
+    7621  (Glamour Dispeller)
+    36635 (Material Container 3.0)
+    36636 (Material Container 4.0)
+  -->
+  <!ENTITY buy_item "36636" >
+  <!ENTITY buy_item_count "1" >
+
+  <!-- Will buy above item on repeat whenever above threshold in GC seals -->
+  <!-- A full trip with all 55 items gets about 60k seals -->
+  <!-- GCExpertTurnin will stop the bot if it can't turn in items due to hitting the cap -->
+  <!-- So set this to a value that makes sense for how much you want to buy with each trip -->
+  <!ENTITY gc_seal_threshold "20000" >
+]>
+<Profile>
+	<Name>Material Container 4.0</Name>
+	<BehaviorDirectory>
+	</BehaviorDirectory>
+	<Order>
+		<While Condition="FreeItemSlots() &gt; 2 and HasAtLeast(12674,2) or HasAtLeast(12675,4) or HasAtLeast(12676,2) or HasAtLeast(12677,4) or HasAtLeast(12678,2) or HasAtLeast(12680,1)">
+
+      <!-- Buy material boxes -->
+      <If condition="not IsOnSubMap(755)">
+        <LisbethTravel Area="Limsa Lominsa (Upper Decks)" XYZ="92.92838, 40.27537, 75.02357" />
+      </If>
+      <While condition="CurrentGCSeals() &gt; &gc_seal_threshold;">
+        <BuyGCItem ItemId="&buy_item;" Count="&buy_item_count;"/>
+      </While>
+
+
+      <!-- Go to trade for items -->
+      <If condition="not IsOnSubMap(2093)">
+        <LisbethTravel Area="Idyllshire" XYZ="-18.35284, 211, -35.47345" />
+      </If>
+
+      <!-- Gordian Parts Exchange (DoW) I -->
+      <!-- Tarnished Gordian Lens -->
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12674,2) and not HasAtLeast(11448,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11448" Count="1" SelectString="0"/>
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11448" Count="1" SelectString="0"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12674,2) and not HasAtLeast(11449,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11449" Count="1" SelectString="0"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12674,2) and not HasAtLeast(11450,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11450" Count="1" SelectString="0"/>
+      </If>
+      <!-- Tarnished Gordian Shaft -->
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12675,4) and not HasAtLeast(11455,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11455" Count="1" SelectString="0"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12675,4) and not HasAtLeast(11456,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11456" Count="1" SelectString="0"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12675,4) and not HasAtLeast(11457,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11457" Count="1" SelectString="0"/>
+      </If>
+      <!-- Tarnished Gordian Crank -->
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12676,2) and not HasAtLeast(11462,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11462" Count="1" SelectString="0"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12676,2) and not HasAtLeast(11463,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11463" Count="1" SelectString="0"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12676,2) and not HasAtLeast(11464,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11464" Count="1" SelectString="0"/>
+      </If>
+      <!-- Tarnished Gordian Spring -->
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12677,4) and not HasAtLeast(11476,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11476" Count="1" SelectString="0"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12677,4) and not HasAtLeast(11477,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11477" Count="1" SelectString="0"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12677,4) and not HasAtLeast(11478,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11478" Count="1" SelectString="0"/>
+      </If>
+      <!-- Tarnished Gordian Pedal -->
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12678,2) and not HasAtLeast(11483,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11483" Count="1" SelectString="0"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12678,2) and not HasAtLeast(11484,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11484" Count="1" SelectString="0"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12678,2) and not HasAtLeast(11485,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11485" Count="1" SelectString="0"/>
+      </If>
+      <!-- Tarnished Gordian Bolt -->
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11490,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11490" Count="1" SelectString="0"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11491,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11491" Count="1" SelectString="0"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11495,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11495" Count="1" SelectString="0"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11496,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11496" Count="1" SelectString="0"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11500,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11500" Count="1" SelectString="0"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11501,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11501" Count="1" SelectString="0"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11505,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11505" Count="1" SelectString="0"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11506,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11506" Count="1" SelectString="0"/>
+      </If>
+
+
+      <!-- Gordian Parts Exchange (DoW) II -->
+      <!-- Tarnished Gordian Lens -->
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12674,2) and not HasAtLeast(11451,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11451" Count="1" SelectString="1"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12674,2) and not HasAtLeast(11452,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11452" Count="1" SelectString="1"/>
+      </If>
+      <!-- Tarnished Gordian Shaft -->
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12675,4) and not HasAtLeast(11458,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11458" Count="1" SelectString="1"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12675,4) and not HasAtLeast(11459,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11459" Count="1" SelectString="1"/>
+      </If>
+      <!-- Tarnished Gordian Crank -->
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12676,2) and not HasAtLeast(11465,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11465" Count="1" SelectString="1"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12676,2) and not HasAtLeast(11466,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11466" Count="1" SelectString="1"/>
+      </If>
+      <!-- Tarnished Gordian Spring -->
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12677,4) and not HasAtLeast(11479,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11479" Count="1" SelectString="1"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12677,4) and not HasAtLeast(11480,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11480" Count="1" SelectString="1"/>
+      </If>
+      <!-- Tarnished Gordian Pedal -->
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12678,2) and not HasAtLeast(11486,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11486" Count="1" SelectString="1"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12678,2) and not HasAtLeast(11487,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11487" Count="1" SelectString="1"/>
+      </If>
+      <!-- Tarnished Gordian Bolt -->
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11492,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11492" Count="1" SelectString="1"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11497,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11497" Count="1" SelectString="1"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11502,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11502" Count="1" SelectString="1"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11507,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11507" Count="1" SelectString="1"/>
+      </If>
+
+
+      <!-- Gordian Parts Exchange (DoM) -->
+      <!-- Tarnished Gordian Lens -->
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12674,2) and not HasAtLeast(11453,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11453" Count="1" SelectString="2"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12674,2) and not HasAtLeast(11454,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11454" Count="1" SelectString="2"/>
+      </If>
+      <!-- Tarnished Gordian Shaft -->
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12675,4) and not HasAtLeast(1160,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11460" Count="1" SelectString="2"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12675,4) and not HasAtLeast(11461,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11461" Count="1" SelectString="2"/>
+      </If>
+      <!-- Tarnished Gordian Crank -->
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12676,2) and not HasAtLeast(11467,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11467" Count="1" SelectString="2"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12676,2) and not HasAtLeast(11468,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11468" Count="1" SelectString="2"/>
+      </If>
+      <!-- Tarnished Gordian Spring -->
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12677,4) and not HasAtLeast(11481,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11481" Count="1" SelectString="2"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12677,4) and not HasAtLeast(11482,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11482" Count="1" SelectString="2"/>
+      </If>
+      <!-- Tarnished Gordian Pedal -->
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12678,2) and not HasAtLeast(11488,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11488" Count="1" SelectString="2"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12678,2) and not HasAtLeast(11489,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11489" Count="1" SelectString="2"/>
+      </If>
+      <!-- Tarnished Gordian Bolt -->
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11493,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11493" Count="1" SelectString="2"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11494,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11494" Count="1" SelectString="2"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11498,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11498" Count="1" SelectString="2"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11499,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11499" Count="1" SelectString="2"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11503,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11503" Count="1" SelectString="2"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11504,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11504" Count="1" SelectString="2"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11508,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11508" Count="1" SelectString="2"/>
+      </If>
+      <If condition="FreeItemSlots() &gt; 2 and HasAtLeast(12680,1) and not HasAtLeast(11509,1)">
+        <BuyShopExchangeItem NpcId="1012227" ItemId="11509" Count="1" SelectString="2"/>
+      </If>
+
+
+      <WaitTimer WaitTime="3"/>
+      <RunCode Name="CloseShop"/>
+
+
+      <!-- GC turnins -->
+      <If condition="not IsOnSubMap(755)">
+        <LisbethTravel Area="Limsa Lominsa (Upper Decks)" XYZ="92.92838, 40.27537, 75.02357" />
+      </If>
+      <GCExpertTurnin/>
+
+    </While>
+	</Order>
+	<GrindAreas>
+	</GrindAreas>
+	<CodeChunks>
+    <CodeChunk Name="CloseShop">
+      <![CDATA[
+        var windowName = "SelectString";
+        await Coroutine.Wait(5000, () => RaptureAtkUnitManager.GetWindowByName(windowName) != null);
+        AtkAddonControl windowByName = RaptureAtkUnitManager.GetWindowByName(windowName);
+        windowByName = RaptureAtkUnitManager.GetWindowByName("SelectString");
+        await Coroutine.Wait(5000, () => windowByName != null);
+        if (windowByName != null)
+        windowByName.SendAction(1, 3uL, 4294967295uL);
+      ]]>
+    </CodeChunk>
+	</CodeChunks>
+</Profile>

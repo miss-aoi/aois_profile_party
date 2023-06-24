@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Profile [
+    <!-- 
+        Profile Creator: miss-aoi
+        Version: Just until Lisbeth is Fixed
+        
+        Need to eat food? Use Gluttony: https://github.com/domesticwarlord86/Gluttony
+        Want to extract materia? Use Extractor: https://github.com/domesticwarlord86/Extractor
+
+        Double check crafting rotation and adjust based on your own setup.
+    -->
+
+    <!-- Set to use -->
+    <!ENTITY Craft "1"> <!-- '1' to Craft or '0' to not -->
+    <!ENTITY Craft_food "36060"> <!-- Tsai tou Vounou -->
+    <!ENTITY Desynth "1"> <!-- '1' to Dungeon Gear / Use at own risk-->
+    <!ENTITY Combat_Class "Paladin" > <!-- What to fight as -->
+    <!ENTITY Lisbeth_Macro_35 "" > <!-- Name of the Lisbeth Macro to use for 35dur crafts -->
+    <!ENTITY Lisbeth_Macro_70 "" > <!-- Name of the Lisbeth Macro to use for 70dur crafts -->
+
+    <!-- If you stop the bot before it finishes, update to new values or it will start over -->
+    <!-- Grade 8 Tinctures -->
+    <!ENTITY Strength "5" >
+    <!ENTITY Dexterity "5" >
+    <!ENTITY Vitality "5" >
+    <!ENTITY Intelligence "5" >
+    <!ENTITY Mind "5" >
+
+    <!-- Other Stuff -->
+    <!ENTITY Color "#6FBDF0">
+    <!ENTITY Shortcut "2000700">
+    <!ENTITY ShellMoundPortal "2011767">
+    <!ENTITY DeterrenceGroundsPortal "2011768">
+    <!ENTITY CausticGrebuloff "10313">
+    <!ENTITY Peacekeeper "10315">
+    <!ENTITY Rala "10316">
+]>
+
+<Profile>
+    <Name>6.4 Gatheringway</Name>
+    <Order>
+        <If Condition="FreeItemSlots() &lt; 15">
+            <Log Color="&Color;" Name="6.4 Gatheringway" Message="Need more inventory space first!"/>
+        </If>
+        <If Condition="FreeItemSlots() &gt; 15">
+
+            <!-- Gather Tincture Materials -->
+            <!-- Alche-mist -->
+            <While Condition="ItemCount(39716) &lt; (&Strength; + &Dexterity; + &Vitality; + &Intelligence; + &Mind;)">
+                <Log Color="&Color;" Name="6.4 Gatheringway" Message="Farming for Alche-mist."/>
+                <While Condition="ItemCount(44) &lt; ((&Strength; + &Dexterity; + &Vitality; + &Intelligence; + &Mind;) * 20) and ItemCount(44) &lt; 1950">
+                    <Log Color="&Color;" Name="6.4 Gatheringway" Message="Need more Allagan Tomestone of Causality."/>
+                    <ChangeClass Job="&Combat_Class;" />
+                    <If Condition="not IsOnMap(973)">
+                        <JoinSupportDuty DutyId="792"/>
+                        <EquipRecommended/>
+                    </If>
+                    <While Condition="IsOnMap(973)">
+                        <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
+                        <If Condition="ObjectExistsWithId(&Shortcut;) and GameObjectManager.GetObjectByNPCId(&Shortcut;).IsTargetable">
+                            <UseTransport NpcId="&Shortcut;" XYZ="359.8188, 499.5619, 188.9725"/>
+                        </If>
+                        <If Condition="WorldManager.SubZoneId == 4107">
+                            <MoveTo XYZ="407.4912, 501.0295, 109.7835"/>
+                            <MoveTo XYZ="360.6028, 500.4016, 25.13674"/>
+                        </If>
+                        <If Condition="WorldManager.SubZoneId in [4107, 4108]">
+                            <MoveTo XYZ="266.4059, 500.5, -118.1882"/>
+                            <MoveTo XYZ="266.6268, 501.0067, -162.5464"/>
+                        </If>
+                        <If Condition="WorldManager.SubZoneId in [4108, 4104]">
+                            <SetPlugins PluginNames="SideStep,回避" IsEnabled="false"/>
+                            <Grind GrindRef="CausticGrebuloff" PostCombatDelay="2.0" While="ObjectExistsWithId(&CausticGrebuloff;)"/>
+                            <LootTreasure/>
+                            <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
+                            <MoveTo XYZ="266.6553, 500.4002, -218.991"/>
+                            <WaitWhile Condition="not GameObjectManager.GetObjectByNPCId(&ShellMoundPortal;).IsTargetable"/>
+                            <UseObject NpcId="&ShellMoundPortal;" XYZ="266.4988, 500.4002, -221.3627" Condition="WorldManager.SubZoneId == 4104"/>
+                            <WaitForLoading/>
+                        </If>
+                        <If Condition="WorldManager.SubZoneId == 4109">
+                            <MoveTo XYZ="-14.99242, 0.0001438856, 14.03172"/>
+                            <LootTreasure/>
+                            <MoveTo XYZ="6.240906, -0.0001268019, -20.24878"/>
+                            <MoveTo XYZ="-104.7037, 0, -114.254"/>
+                            <MoveTo XYZ="-83.48212, -0.01531982, -163.0122"/>
+                            <LootTreasure/>
+                            <MoveTo XYZ="-104.9368, 0.1995358, -195.7092"/>
+                        </If>
+                        <If Condition="WorldManager.SubZoneId in [4109, 4105]">
+                            <SetPlugins PluginNames="SideStep,回避" IsEnabled="false"/>
+                            <WaitTimer WaitTime="1"/>
+                            <Grind GrindRef="Peacekeeper" PostCombatDelay="2.0" While="ObjectExistsWithId(&Peacekeeper;)"/>
+                            <LootTreasure/>
+                            <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
+                            <MoveTo XYZ="-107.9689, -8.000126, -287.6669"/>
+                            <WaitWhile Condition="not GameObjectManager.GetObjectByNPCId(&DeterrenceGroundsPortal;).IsTargetable"/>
+                            <UseObject NpcId="&DeterrenceGroundsPortal;" XYZ="-110.7042, -7.854956, -289.3874" Condition="WorldManager.SubZoneId == 4105"/>
+                            <WaitForLoading/>
+                        </If>
+                        <If Condition="WorldManager.SubZoneId == 4110">
+                            <MoveTo XYZ="-297.6578, -610.15, 92.24072"/>
+                            <LootTreasure/>
+                            <MoveTo XYZ="-296.7371, -605.0003, 49.38559"/>
+                            <MoveTo XYZ="-379.6894, -587.4899, -31.56436"/>
+                            <LootTreasure/>
+                            <MoveTo XYZ="-379.9343, -576.9999, -125.1538"/>
+                        </If>
+                        <If Condition="WorldManager.SubZoneId in [4110, 4106]">
+                            <SetPlugins PluginNames="SideStep,回避" IsEnabled="false"/>
+                            <WaitTimer WaitTime="3"/>
+                            <Grind GrindRef="Rala" PostCombatDelay="2.0" While="ObjectExistsWithId(&Rala;)"/>
+                            <LootTreasure/>
+                            <SetPlugins PluginNames="SideStep,回避" IsEnabled="true"/>
+                            <LeaveDuty/>
+                        </If>
+                    </While>
+                </While>
+                <Log Color="&Color;" Name="6.4 Gatheringway" Message="Buying Alche-mist."/>
+                <While Condition="((&Strength; + &Dexterity; + &Vitality; + &Intelligence; + &Mind;) - ItemCount(39716)) &gt; 10 or ((&Strength; + &Dexterity; + &Vitality; + &Intelligence; + &Mind;) - ItemCount(39716)) == 10">
+                    <LisbethTravel Area="Radz-at-Han" XYZ=" -16.94001, 0.921, -43.05207"/>
+                    <BuyShopExchangeCurrency ItemId="39716" Count="10" NpcId="1037301" SelectString="3"/>
+                </While>
+                <While Condition="((&Strength; + &Dexterity; + &Vitality; + &Intelligence; + &Mind;) - ItemCount(39716)) &gt; 5 or ((&Strength; + &Dexterity; + &Vitality; + &Intelligence; + &Mind;) - ItemCount(39716)) == 5">
+                    <LisbethTravel Area="Radz-at-Han" XYZ=" -16.94001, 0.921, -43.05207"/>
+                    <BuyShopExchangeCurrency ItemId="39716" Count="5" NpcId="1037301" SelectString="3" />
+                </While>
+                <While Condition="((&Strength; + &Dexterity; + &Vitality; + &Intelligence; + &Mind;) - ItemCount(39716)) &gt; 1 or ((&Strength; + &Dexterity; + &Vitality; + &Intelligence; + &Mind;) - ItemCount(39716)) == 1">
+                    <LisbethTravel Area="Radz-at-Han" XYZ=" -16.94001, 0.921, -43.05207"/>
+                    <BuyShopExchangeCurrency ItemId="39716" Count="1" NpcId="1037301" SelectString="3" />
+                </While>
+            </While>
+            <!-- Earthbreak Aethersand -->
+            <While Condition="ItemCount(38936) &lt; (&Strength; + &Dexterity; + &Vitality; + &Intelligence; + &Mind;)">
+                <Log Color="&Color;" Name="6.4 Gatheringway" Message="Need more Earthbreak Aethersand"/>
+                <Lisbeth Json="[{'Group':1,'Item':38936,'Amount':5,'Enabled':true,'Type':'Gather'}]" />
+            </While>
+            <!-- Lunatender Blossom -->
+            <While Condition="ItemCount(36258) &lt; (&Strength; + &Dexterity; + &Vitality; + &Intelligence; + &Mind;)">
+                <Log Color="&Color;" Name="6.4 Gatheringway" Message="Need more Linatender Blosson"/>
+                <Lisbeth Json="[{'Group':1,'Item':36258,'Amount':1,'Enabled':true,'Type':'Grind'}]" />
+            </While>
+            <!-- Underground Spring Water -->
+            <While Condition="ItemCount(27782) &lt; (&Strength; + &Dexterity; + &Vitality; + &Intelligence; + &Mind;) * 2">
+                <Log Color="&Color;" Name="6.4 Gatheringway" Message="Need more Underground Spring Water"/>
+                <Lisbeth Json="[{'Group':1,'Item':27782,'Amount':10,'Enabled':true,'Type':'Gather'}]" />
+            </While>
+            <!-- Light Gerbera -->
+            <While Condition="ItemCount(27785) &lt; (&Dexterity; * 2) and (ItemCount(36228) &lt; &Dexterity; or ItemCount(36228) == &Dexterity;)">
+                <Log Color="&Color;" Name="6.4 Gatheringway" Message="Need more Light Gerbera"/>
+                <Lisbeth Json="&#91;&#123;'Group':1,'Item':27785,'Amount':&Dexterity;,'Enabled':true,'Type':'Gather'&#125;&#93;" />
+            </While>
+            <!-- Lime Basil -->
+            <While Condition="ItemCount(27783) &lt; (&Vitality; * 2) and (ItemCount(36229) &lt; &Vitality; or ItemCount(36229) == &Vitality;)">
+                <Log Color="&Color;" Name="6.4 Gatheringway" Message="Need more Lime Basil"/>
+                <Lisbeth Json="&#91;&#123;'Group':1,'Item':27783,'Amount':&Vitality;,'Enabled':true,'Type':'Gather'&#125;&#93;" />
+            </While>
+            <!-- Tiger Lily -->
+            <While Condition="ItemCount(27784) &lt; (&Mind; * 2) and (ItemCount(36231) &lt; &Mind; or ItemCount(36231) == &Mind;)">
+                <Log Color="&Color;" Name="6.4 Gatheringway" Message="Need more Tiger Lily"/>
+                <Lisbeth Json="&#91;&#123;'Group':1,'Item':27784,'Amount':&Mind;,'Enabled':true,'Type':'Gather'&#125;&#93;" />
+            </While>
+            <!-- Sweet Alyssum-->
+            <While Condition="ItemCount(36258) &lt; (&Strength; * 2) and (ItemCount(36227) &lt; &Strength; or ItemCount(36227) == &Strength;)">
+                <Log Color="&Color;" Name="6.4 Gatheringway" Message="Need more Sweet Alyssum"/>
+                <Lisbeth Json="&#91;&#123;'Group':1,'Item':27779,'Amount':&Strength;,'Enabled':true,'Type':'Gather'&#125;&#93;" />
+            </While>
+            <!-- Fernleaf Lavender -->
+            <While Condition="ItemCount(27780) &lt; (&Intelligence; * 2) and (ItemCount(36230) &lt; &Intelligence; or ItemCount(36230) == &Intelligence;)">
+                <Log Color="&Color;" Name="6.4 Gatheringway" Message="Need more Ferneleaf Lavender"/>
+                <Lisbeth Json="&#91;&#123;'Group':1,'Item':27780,'Amount':&Intelligence;,'Enabled':true,'Type':'Gather'&#125;&#93;" />
+            </While>
+            <!-- Water Crystal -->
+            <While Condition="ItemCount(13) &lt; (&Strength; + &Dexterity; + &Vitality; + &Intelligence; + &Mind;) * 8">
+                <Log Color="&Color;" Name="6.4 Gatheringway" Message="Need more Water Crystals"/>
+                <Lisbeth Json="[{'Group':1,'Item':13,'Amount':10,'Enabled':true,'Type':'Gather'}]" />
+            </While>
+            <!-- Lightning Cluster -->
+            <While Condition="ItemCount(18) &lt; (&Strength; + &Dexterity; + &Vitality; + &Intelligence; + &Mind;) * 3">
+                <Log Color="&Color;" Name="6.4 Gatheringway" Message="Need more Lightning Cluster"/>
+                <Lisbeth Json="[{'Group':1,'Item':18,'Amount':10,'Enabled':true,'Type':'Gather'}]" />
+            </While>
+            <!-- Water Cluster -->
+            <While Condition="ItemCount(19) &lt; (&Strength; + &Dexterity; + &Vitality; + &Intelligence; + &Mind;) * 3">
+                <Log Color="&Color;" Name="6.4 Gatheringway" Message="Need more Water Cluster"/>
+                <Lisbeth Json="[{'Group':1,'Item':19,'Amount':10,'Enabled':true,'Type':'Gather'}]" />
+            </While>
+
+            <!-- Grade 8 Tincture of Strength -->
+            <If Condition="&Strength; &gt; 0">
+                <Log Color="&Color;" Name="6.4 Gatheringway" Message="Starting work on Grade 8 Tincture of Strength."/>
+                <Lisbeth Json="&#91;&#123;'Group':1,'Item':39727,'Amount':&Strength;,'Enabled':true,'Type':'Alchemist','Food':10&Craft_food;,'Macro':'&Lisbeth_Macro_70;'&#125;&#93;" />
+            </If>
+
+            <!-- Grade 8 Tincture of Dexterity -->
+            <If Condition="&Dexterity; &gt; 0">
+                <Log Color="&Color;" Name="6.4 Gatheringway" Message="Starting work on Grade 8 Tincture of Dexterity."/>
+                <Lisbeth Json="&#91;&#123;'Group':1,'Item':39728,'Amount':&Dexterity;,'Enabled':true,'Type':'Alchemist','Food':10&Craft_food;,'Macro':'&Lisbeth_Macro_70;'&#125;&#93;" />
+            </If>
+
+            <!-- Grade 8 Tincture of Vitality -->
+            <If Condition="&Vitality; &gt; 0">
+                <Log Color="&Color;" Name="6.4 Gatheringway" Message="Starting work on Grade 8 Tincture of Vitality."/>
+                <Lisbeth Json="&#91;&#123;'Group':1,'Item':39729,'Amount':&Vitality;,'Enabled':true,'Type':'Alchemist','Food':10&Craft_food;,'Macro':'&Lisbeth_Macro_70;'&#125;&#93;" />
+            </If>
+
+            <!-- Grade 8 Tincture of Intelligence -->
+            <If Condition="&Intelligence; &gt; 0">
+                <Log Color="&Color;" Name="6.4 Gatheringway" Message="Starting work on Grade 8 Tincture of Intelligence."/>
+                <Lisbeth Json="&#91;&#123;'Group':1,'Item':39730,'Amount':&Intelligence;,'Enabled':true,'Type':'Alchemist','Food':10&Craft_food;,'Macro':'&Lisbeth_Macro_70;'&#125;&#93;" />
+            </If>
+
+            <!-- Grade 8 Tincture of Mind -->
+            <If Condition="&Mind; &gt; 0">
+                <Log Color="&Color;" Name="6.4 Gatheringway" Message="Starting work on Grade 8 Tincture of Mind."/>
+                <Lisbeth Json="&#91;&#123;'Group':1,'Item':39731,'Amount':&Mind;,'Enabled':true,'Type':'Alchemist','Food':10&Craft_food;,'Macro':'&Lisbeth_Macro_70;'&#125;&#93;" />
+            </If>
+
+            <StopCrafting/>
+            <Log Color="&Color;" Name="6.4 Gatheringway" Message="Finished with it all!"/>
+
+        </If>
+    </Order>
+
+    <GrindAreas>
+        <GrindArea Name="CausticGrebuloff">
+            <Hotspots>
+            <Hotspot XYZ="266.5, 501.0067, -183" Radius="60"/>
+                </Hotspots>
+            <TargetMobs>
+                <TargetMob Id="&CausticGrebuloff;"/>
+            </TargetMobs>
+            <MinLevel/>
+            <MaxLevel/>
+        </GrindArea>
+            <GrindArea Name="Peacekeeper">
+            <Hotspots>
+                <Hotspot XYZ="-105, 0.1995358, -210" Radius="60"/>
+            </Hotspots>
+            <TargetMobs>
+                <TargetMob Id="&Peacekeeper;"/>
+            </TargetMobs>
+            <MinLevel/>
+            <MaxLevel/>
+        </GrindArea>
+        <GrindArea Name="Rala">
+            <Hotspots>
+                <Hotspot XYZ="-380, -576.9999, -145" Radius="60"/>
+            </Hotspots>
+            <TargetMobs>
+                <TargetMob Id="&Rala;"/>
+            </TargetMobs>
+            <MinLevel/>
+            <MaxLevel/>
+        </GrindArea>
+    </GrindAreas>
+    
+    <CodeChunks>
+    </CodeChunks>
+
+</Profile>

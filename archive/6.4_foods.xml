@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Profile [
+    <!-- 
+        Profile Creator: miss-aoi
+        Version: Just until Lisbeth is Fixed
+        
+        Need to eat food? Use Gluttony: https://github.com/domesticwarlord86/Gluttony
+        Want to extract materia? Use Extractor: https://github.com/domesticwarlord86/Extractor
+
+        Double check crafting rotation and adjust based on your own setup.
+    -->
+
+    <!-- Set to use -->
+    <!ENTITY Craft "1"> <!-- '1' to Craft or '0' to not -->
+    <!ENTITY Craft_food "36060"> <!-- Tsai tou Vounou -->
+
+    <!-- If you stop the bot before it finishes, update to new values or it will start over -->
+    <!ENTITY Baked_Eggplant  "0" > <!-- Total Amount of crafts to do -->
+    <!ENTITY eggplant_cheese "0" > <!-- Set to double of Baked Eggplant value -->
+    <!ENTITY Caviar_Canapes  "23" > <!-- Total Amount of crafts to do -->
+    <!ENTITY caviar_cheese   "46" > <!-- Set to double of Cariar Canapes value -->
+
+    <!-- Other Stuff -->
+    <!ENTITY Craft_Area "Eulmore" > <!-- Set to zone's area -->
+    <!ENTITY Craft_Coords "16.10502, 82.05, -18.81707" > <!-- Set to coordinates -->
+    <!ENTITY Color "#6FBDF0">
+]>
+
+<Profile>
+    <Name>6.4 Foods</Name>
+    <Order>
+        <If Condition="FreeItemSlots() &gt; 4">
+
+            <!-- Baked Eggplant -->
+            <If Condition="&Baked_Eggplant; &gt; 0">
+
+                <!-- Dark Eggplant -->
+                <If Condition="ItemCount(39865) &lt; &Baked_Eggplant;">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Baked Eggplant - Need more eggieplants (Dark Eggplant)"/>
+                    <Lisbeth Json="[{'Group':1,'Item':33913,'Amount':1485,'Enabled':true,'Type':'CraftMasterpiece','AmountMode':'Restock'}]" />
+                    <While Condition="ItemCount(39865) &lt; &Baked_Eggplant; and HasAtLeast(33913,15)">
+                        <Log Color="&Color;" Name="6.4 Foods" Message="Baked Eggplant - Buying Dark Eggplants"/>
+                        <While Condition="(&Baked_Eggplant; - ItemCount(39865)) &gt; 10">
+                            <BuyInclusionShopItem ItemId="39865" Count="10"/>
+                        </While>
+                        <While Condition="(&Baked_Eggplant; - ItemCount(39865)) &gt; 5">
+                            <BuyInclusionShopItem ItemId="39865" Count="5"/>
+                        </While>
+                        <While Condition="(&Baked_Eggplant; - ItemCount(39865)) &gt; 1 or (&Baked_Eggplant; - ItemCount(39865)) == 1">
+                            <BuyInclusionShopItem ItemId="39865" Count="1"/>
+                        </While>
+                    </While>
+                </If>
+                <If Condition="not HasAtLeast(39865,&Baked_Eggplant;)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Baked Eggplant - We're good with eggieplants (Dark Eggplant)"/>
+                </If>
+
+                <!-- Garlean Cheese -->
+                <If Condition="not HasAtLeast(36081,&eggplant_cheese;)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Baked Eggplant - Need more cheeeeesssee (Garlean cheese)"/>
+                    <Lisbeth Json="&#91;&#123;'Group':1,'Item':36081,'Amount':&eggplant_cheese;,'Enabled':true,'Type':'Culinarian','AmountMode':'Restock'&#125;&#93;" />
+                </If>
+                <If Condition="HasAtLeast(36081,&eggplant_cheese;)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Baked Eggplant - We're good on cheeeeesssee (Garlean cheese)"/>
+                </If>
+
+                <!-- Frantoio Oil -->
+                <If Condition="not HasAtLeast(27838,&Baked_Eggplant;)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Baked Eggplant - Need more essential oils (Frantoio Oil)"/>
+                    <Lisbeth Json="&#91;&#123;'Group':1,'Item':27838,'Amount':&Baked_Eggplant;,'Enabled':true,'Type':'Culinarian','AmountMode':'Restock'&#125;&#93;" />
+                </If>
+                <If Condition="HasAtLeast(27838,&Baked_Eggplant;)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Baked Eggplant - We're good on essential oils (Frantoio Oil)"/>
+                </If>
+
+                <!-- Giant Popoto -->
+                <If Condition="not HasAtLeast(36089,&Baked_Eggplant;)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Baked Eggplant - Need more popototos (Giant Popoto)"/>
+                    <Lisbeth Json="&#91;&#123;'Group':1,'Item':36089,'Amount':&Baked_Eggplant;,'Enabled':true,'Type':'Gather','AmountMode':'Restock'&#125;&#93;" />
+                </If>
+                <If Condition=" HasAtLeast(36089,&Baked_Eggplant;)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Baked Eggplant - We're good on popototos (Giant Popoto)"/>
+                </If>
+
+                <!-- Blood Tomato -->
+                <If Condition="not HasAtLeast(27825,&Baked_Eggplant;)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Baked Eggplant - Need more bloody 'maters (Blood Tomato)"/>
+                    <Lisbeth Json="&#91;&#123;'Group':1,'Item':27825,'Amount':&Baked_Eggplant;,'Enabled':true,'Type':'Gather','AmountMode':'Restock'&#125;&#93;" />
+                </If>
+                <If Condition="HasAtLeast(27825,&Baked_Eggplant;)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Baked Eggplant - We're good on bloody 'maters (Blood Tomato)"/>
+                </If>
+
+                <!-- Earthbreak Aethersand -->
+                <If Condition="not HasAtLeast(38936,&Baked_Eggplant;)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Baked Eggplant - Need more earthbreak (Earthbreak Aethersand)"/>
+                    <Lisbeth Json="&#91;&#123;'Group':1,'Item':38936,'Amount':&Baked_Eggplant;,'Enabled':true,'Type':'Gather','AmountMode':'Restock'&#125;&#93;" />
+                </If>
+                <If Condition="HasAtLeast(38936,&Baked_Eggplant;)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Baked Eggplant - We're good on earthbreak (Earthbreak Aethersand)"/>
+                </If>
+
+                <!-- Fire Cluster -->
+                <While Condition="ItemCount(14) &lt; (&Baked_Eggplant; * 3)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Farming more Fire Clusters" />
+                    <Lisbeth Json="[{'Id':1,'Group':1,'Item':14,'Amount':500,'Enabled':true,'Type':'Gather'}]" />
+                </While>
+
+                <!-- Water Cluster -->
+                <While Condition="ItemCount(19) &lt; (&Baked_Eggplant; * 3)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Farming more Water Clusters" />
+                    <Lisbeth Json="[{'Id':1,'Group':1,'Item':19,'Amount':500,'Enabled':true,'Type':'Gather'}]" />
+                </While>
+
+                <!-- Craft -->
+                <If Condition="&Craft; == 1">
+                    <If Condition="not HasAtLeast(&Craft_food;,1)">
+                        <Log Color="&Color;" Name="6.4 Foods" Message="Baked Eggplant - Need more crafting food!"/>
+                        <Lisbeth Json="&#91;&#123;'Group':1,'Item':&Craft_food;,'Amount':&Baked_Eggplant;,'Enabled':true,'Type':'Culinarian','AmountMode':'Restock'&#125;&#93;" />
+                    </If>
+
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Baked Eggplant - It's time to craft!"/>
+                    <LisbethTravel Area="&Craft_Area;" XYZ="&Craft_Coords;"/>
+                    <While Condition="HasAtLeast(39865,1) and HasAtLeast(36081,2) and HasAtLeast(27838,1) and HasAtLeast(36089,1) and HasAtLeast(27825,1) and HasAtLeast(38936,1)">
+                        <ChangeClass Job="Culinarian" />
+                        <If Condition="not Core.Player.HasAura(48)">
+                            <StopCrafting/>
+                            <EatFood ItemId="&Craft_food;" HqOnly="True"/>
+                            <WaitTimer WaitTime="3"/>
+                        </If>
+
+                        <Synthesize RecipeId="35593" MinimumCp="655" HQMats="-1,-1,-1,-1,-1" />
+                        <CraftAction Name="Muscle Memory"/>
+                        <CraftAction Name="Manipulation"/>
+                        <CraftAction Name="Waste Not"/>
+                        <CraftAction Name="Veneration"/>
+                        <CraftAction Name="Groundwork"/>
+                        <CraftAction Name="Groundwork"/>
+                        <CraftAction Name="Groundwork"/>
+                        <CraftAction Name="Delicate Synthesis"/>
+                        <CraftAction Name="Delicate Synthesis"/>
+                        <CraftAction Name="Waste Not II"/>
+                        <CraftAction Name="Innovation"/>
+                        <CraftAction Name="Preparatory Touch"/>
+                        <CraftAction Name="Preparatory Touch"/>
+                        <CraftAction Name="Preparatory Touch"/>
+                        <CraftAction Name="Innovation"/>
+                        <CraftAction Name="Preparatory Touch"/>
+                        <CraftAction Name="Great Strides"/>
+                        <CraftAction Name="Byregot's Blessing"/>
+                        <CraftAction Name="Careful Synthesis"/>
+                    </While>
+                </If>
+                <Log Color="&Color;" Name="6.4 Foods" Message="Baked Eggplant - Finished with Baked Eggplant"/>
+            </If>
+
+            <!-- Caviar Canapes -->
+            <If Condition="&Caviar_Canapes; &gt; 0">
+
+                <!-- Caviar Sturgeon -->
+                <While Condition="not HasAtLeast(39867,&Caviar_Canapes;)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Caviar Canapes - Need more fishies (Caviar Sturgeon)"/>
+                    <Lisbeth Json="[{'Group':1,'Item':33913,'Amount':1485,'Enabled':true,'Type':'CraftMasterpiece','AmountMode':'Restock'}]" />
+                    <While Condition="not HasAtLeast(39867,&Caviar_Canapes;) and HasAtLeast(33913,15)">
+                        <Log Color="&Color;" Name="6.4 Foods" Message="Caviar Canapes - Buying Dark Eggplants"/>
+                        <While Condition="(&Caviar_Canapes; - ItemCount(39867)) &gt; 10 and HasAtLeast(33913,15)">
+                            <BuyInclusionShopItem ItemId="39867" Count="10"/>
+                        </While>
+                        <While Condition="(&Caviar_Canapes; - ItemCount(39867)) &gt; 5 and HasAtLeast(33913,15)">
+                            <BuyInclusionShopItem ItemId="39867" Count="5"/>
+                        </While>
+                        <While Condition="(&Caviar_Canapes; - ItemCount(39867)) &gt; 1 or (&Caviar_Canapes; - ItemCount(39867)) == 1 and HasAtLeast(33913,15)">
+                            <BuyInclusionShopItem ItemId="39867" Count="1"/>
+                        </While>
+                    </While>
+                </While>
+
+                <!-- Garlean Cheese -->
+                <If Condition="not HasAtLeast(36081,&caviar_cheese;)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Caviar Canapes - Need more cheeeeesssee (Garlean cheese)"/>
+                    <Lisbeth Json="&#91;&#123;'Group':1,'Item':36081,'Amount':&caviar_cheese;,'Enabled':true,'Type':'Culinarian','AmountMode':'Restock'&#125;&#93;" />
+                </If>
+
+                <!-- Upland Wheat Flour -->
+                <If Condition="not HasAtLeast(27841,&Caviar_Canapes;)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Caviar Canapes - Need more uplander sift stuff (Upland Wheat Flour)"/>
+                    <Lisbeth Json="&#91;&#123;'Group':1,'Item':27841,'Amount':&Caviar_Canapes;,'Enabled':true,'Type':'Culinarian','AmountMode':'Restock'&#125;&#93;" />
+                </If>
+
+                <!-- Alien Onion -->
+                <If Condition="not HasAtLeast(36097,&Caviar_Canapes;)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Caviar Canapes - Need more foreign layers (Alien Onion)"/>
+                    <Lisbeth Json="&#91;&#123;'Group':1,'Item':36097,'Amount':&Caviar_Canapes;,'Enabled':true,'Type':'Gather','AmountMode':'Restock'&#125;&#93;" />
+                </If>
+
+                <!-- Blood Tomato -->
+                <If Condition="not HasAtLeast(27825,&Caviar_Canapes;)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Caviar Canapes - Need more bloody 'maters (Blood Tomato)"/>
+                    <Lisbeth Json="&#91;&#123;'Group':1,'Item':27825,'Amount':&Caviar_Canapes;,'Enabled':true,'Type':'Gather','AmountMode':'Restock'&#125;&#93;" />
+                </If>
+
+                <!-- Earthbreak Aethersand -->
+                <If Condition="not HasAtLeast(38936,&Caviar_Canapes;)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Caviar Canapes - Need more earthbreak (Earthbreak Aethersand)"/>
+                    <Lisbeth Json="&#91;&#123;'Group':1,'Item':38936,'Amount':&Caviar_Canapes;,'Enabled':true,'Type':'Gather','AmountMode':'Restock'&#125;&#93;" />
+                </If>
+
+                <!-- Fire Cluster -->
+                <While Condition="ItemCount(14) &lt; (&Caviar_Canapes; * 3)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Farming more Fire Clusters" />
+                    <Lisbeth Json="[{'Id':1,'Group':1,'Item':14,'Amount':500,'Enabled':true,'Type':'Gather'}]" />
+                </While>
+
+                <!-- Water Cluster -->
+                <While Condition="ItemCount(19) &lt; (&Caviar_Canapes; * 3)">
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Farming more Water Clusters" />
+                    <Lisbeth Json="[{'Id':1,'Group':1,'Item':19,'Amount':500,'Enabled':true,'Type':'Gather'}]" />
+                </While>
+
+                <!-- Craft -->
+                <If Condition="&Craft; == 1">
+                    <If Condition="not HasAtLeast(&Craft_food;,1)">
+                        <Log Color="&Color;" Name="6.4 Foods" Message="Caviar Canapes - Need more crafting food!"/>
+                        <Lisbeth Json="&#91;&#123;'Group':1,'Item':&Craft_food;,'Amount':&Baked_Eggplant;,'Enabled':true,'Type':'Culinarian','AmountMode':'Restock'&#125;&#93;" />
+                    </If>
+
+                    <Log Color="&Color;" Name="6.4 Foods" Message="Caviar Canapes - It's time to craft!"/>
+                    <LisbethTravel Area="&Craft_Area;" XYZ="&Craft_Coords;"/>
+                    <While Condition="HasAtLeast(39867,1) and HasAtLeast(36081,2) and HasAtLeast(27841,1) and HasAtLeast(36097,1) and HasAtLeast(27825,1) and HasAtLeast(38936,1)">
+                        <ChangeClass Job="Culinarian" />
+                        <If Condition="not Core.Player.HasAura(48)">
+                            <StopCrafting/>
+                            <EatFood ItemId="&Craft_food;" HqOnly="True"/>
+                            <WaitTimer WaitTime="3"/>
+                        </If>
+
+                        <Synthesize RecipeId="35597" MinimumCp="655" HQMats="-1,-1,-1,-1,-1" />
+                        <CraftAction Name="Muscle Memory"/>
+                        <CraftAction Name="Manipulation"/>
+                        <CraftAction Name="Waste Not"/>
+                        <CraftAction Name="Veneration"/>
+                        <CraftAction Name="Groundwork"/>
+                        <CraftAction Name="Groundwork"/>
+                        <CraftAction Name="Groundwork"/>
+                        <CraftAction Name="Delicate Synthesis"/>
+                        <CraftAction Name="Delicate Synthesis"/>
+                        <CraftAction Name="Waste Not II"/>
+                        <CraftAction Name="Innovation"/>
+                        <CraftAction Name="Preparatory Touch"/>
+                        <CraftAction Name="Preparatory Touch"/>
+                        <CraftAction Name="Preparatory Touch"/>
+                        <CraftAction Name="Innovation"/>
+                        <CraftAction Name="Preparatory Touch"/>
+                        <CraftAction Name="Great Strides"/>
+                        <CraftAction Name="Byregot's Blessing"/>
+                        <CraftAction Name="Careful Synthesis"/>
+                    </While>
+                </If>
+                <Log Color="&Color;" Name="6.4 Foods" Message="Caviar Canapes - Finished with Caviar Canapes"/>
+            </If>
+
+            <StopCrafting/>
+            <Log Color="&Color;" Name="6.4 Foods" Message="Finished with it all!"/>
+
+        </If>
+    </Order>
+
+    <GrindAreas>
+    </GrindAreas>
+    
+    <CodeChunks>
+    </CodeChunks>
+
+</Profile>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Profile [
+    <!-- 
+        Profile Creator: miss-aoi
+        Version: Mocha Latte
+        
+        Need to eat food? Use Gluttony: https://github.com/domesticwarlord86/Gluttony
+        Want to extract materia? Use Extractor: https://github.com/domesticwarlord86/Extractor
+    -->
+    
+    <!-- Adjust to desired amount -->
+    <!ENTITY Lovingbloom        "999"> <!-- 12-02 -->
+    <!ENTITY Dark_Cherry_Log    "999"> <!-- 02-04 -->
+    <!ENTITY Softsilver_Ore     "999"> <!-- 04-06 -->
+    <!ENTITY Meghemite          "999"> <!-- 06-08 -->
+    <!ENTITY Raw_Spodumene      "999"> <!-- 08-10 -->
+    <!ENTITY Field_Mustard      "999"> <!-- 10-12 -->
+
+    <!-- If only running this script, will regain GP by the time next window opens -->
+    <!-- Otherwise set to 'Auto' if loading other profiles -->
+    <!ENTITY Cordials "None">
+]>
+<Profile>
+    <Name>GatheringManager</Name>
+    <BehaviorDirectory>..\..\Quest Behaviors</BehaviorDirectory>
+    <Order>
+        <While Condition="FreeItemSlots() &gt; 4">
+            
+            <!-- Lovingbloom -->
+            <If Condition="not HasAtLeast(39710,&Lovingbloom;) and (IsTimeBetween(0,2) or IsTimeBetween(12,14))">
+                <Log Message="Gathering Lovingbloom" />
+                <If condition="not ClassName == ClassJobType.Botanist">
+                    <ChangeClass Job="Botanist" />
+                </If>
+                <If condition="not IsOnSubMap(3963)">
+                    <LisbethTravel Area="Mare Lamentorum" XYZ="176.1554, 92.23508, -51.3256" />
+                </If>
+                <ExGather loops="1" SpawnTimeout="5" CordialType="&Cordials;" DiscoverUnknowns="True">
+                    <GatherObjects>
+                    <GatherObject>Legendary Lush Vegetation Patch</GatherObject>
+                    </GatherObjects>
+                    <ItemNames>
+                        <ItemName>Lovingbloom</ItemName>
+                    </ItemNames>
+                    <HotSpots>
+                        <HotSpot XYZ="176.1554, 92.23508, -51.3256" Radius="100"/>
+                    </HotSpots>
+                </ExGather>
+            </If>
+            
+            <!-- Dark Cherry Log -->
+            <If Condition="not HasAtLeast(39705,&Dark_Cherry_Log;) and (IsTimeBetween(2,4) or IsTimeBetween(14,16))">
+                <Log Message="Gathering Dark Cherry Log" />
+                <If condition="not ClassName == ClassJobType.Botanist">
+                    <ChangeClass Job="Botanist" />
+                </If>
+                <If condition="not IsOnSubMap(3848)">
+                    <LisbethTravel Area="Labyrinthos (South)" XYZ="-138.116, -23.71446, 730.9581" />
+                </If>
+                <ExGather loops="1" SpawnTimeout="5" CordialType="&Cordials;" DiscoverUnknowns="True">
+                    <GatherObjects>
+                    <GatherObject>Legendary Mature Tree</GatherObject>
+                    </GatherObjects>
+                    <ItemNames>
+                        <ItemName>Dark Cherry Log</ItemName>
+                    </ItemNames>
+                    <HotSpots>
+                        <HotSpot XYZ="-128.7585, -23.64644, 733.3094"  Radius="100"/>
+                    </HotSpots>
+                </ExGather>
+            </If>
+
+            <!-- Softsilver Ore -->
+            <If Condition="not HasAtLeast(39707,&Softsilver_Ore;) and (IsTimeBetween(4,6) or IsTimeBetween(16,18))">
+                <Log Message="Gathering Softsilver Ore" />
+                <If condition="not ClassName == ClassJobType.Miner">
+                    <ChangeClass Job="Miner" />
+                </If>
+                <If condition="not IsOnSubMap(3970)">
+                    <LisbethTravel Area="Ultima Thule (Ostrakon Deka-okto)" XYZ="-237.7746, 79.22443, 383.8629" />
+                </If>
+                <ExGather loops="1" SpawnTimeout="5" CordialType="&Cordials;" DiscoverUnknowns="True">
+                    <GatherObjects>
+                    <GatherObject>Legendary Mineral Deposit</GatherObject>
+                    </GatherObjects>
+                    <ItemNames>
+                        <ItemName>Softsilver Ore</ItemName>
+                    </ItemNames>
+                    <HotSpots>
+                        <HotSpot XYZ="-237.7746, 79.22443, 383.8629" Radius="100"/>
+                    </HotSpots>
+                </ExGather>
+            </If>
+
+            <!-- Meghemite -->
+            <If Condition="not HasAtLeast(39706,&Meghemite;) and (IsTimeBetween(6,8) or IsTimeBetween(18,20))">
+                <Log Message="Gathering Meghemite" />
+                <If condition="not ClassName == ClassJobType.Miner">
+                    <ChangeClass Job="Miner" />
+                </If>
+                <If condition="not IsOnSubMap(3892)">
+                    <LisbethTravel Area="Thavnair (East)" XYZ="162.9916, 7.672297, -396.5064" />
+                </If>
+                <ExGather loops="1" SpawnTimeout="5" CordialType="&Cordials;" DiscoverUnknowns="True">
+                    <GatherObjects>
+                    <GatherObject>Legendary Rocky Outcrop</GatherObject>
+                    </GatherObjects>
+                    <ItemNames>
+                        <ItemName>Meghemite</ItemName>
+                    </ItemNames>
+                    <HotSpots>
+                        <HotSpot XYZ="167.8986, 11.41925, -447.3895" Radius="100"/>
+                    </HotSpots>
+                </ExGather>
+            </If>
+
+            <!-- Raw Spodumene -->
+            <If Condition="not HasAtLeast(39707,&Raw_Spodumene;) and (IsTimeBetween(8,10) or IsTimeBetween(20,22))">
+                <Log Message="Gathering Raw Spodumene" />
+                <If condition="not ClassName == ClassJobType.Miner">
+                    <ChangeClass Job="Miner" />
+                </If>
+                <If condition="not IsOnSubMap(3947)">
+                    <LisbethTravel Area="Elpis" XYZ="419.7303, 138.585, -152.0588" />
+                </If>
+                <ExGather loops="1" SpawnTimeout="5" CordialType="&Cordials;" DiscoverUnknowns="True">
+                    <GatherObjects>
+                    <GatherObject>Legendary Mineral Deposit</GatherObject>
+                    </GatherObjects>
+                    <ItemNames>
+                        <ItemName>Raw Spodumene</ItemName>
+                    </ItemNames>
+                    <HotSpots>
+                        <HotSpot XYZ="415.1626, 138.585, -156.2194" Radius="100"/>
+                    </HotSpots>
+                </ExGather>
+            </If>
+
+            <!-- Field Mustard -->
+            <If Condition="not HasAtLeast(39709,&Field_Mustard;) and (IsTimeBetween(10,12) or IsTimeBetween(22,24))">
+                <Log Message="Gathering Field Mustard" />
+                <If condition="not ClassName == ClassJobType.Botanist">
+                    <ChangeClass Job="Botanist" />
+                </If>
+                <If condition="not IsOnSubMap(3917)">
+                    <LisbethTravel Area="Garlemald" XYZ="-171.517, 11.49119, -431.3546" />
+                </If>
+                <ExGather loops="1" SpawnTimeout="5" CordialType="&Cordials;" DiscoverUnknowns="True">
+                    <GatherObjects>
+                    <GatherObject>Legendary Lush Vegetation Patch</GatherObject>
+                    </GatherObjects>
+                    <ItemNames>
+                        <ItemName>Field Mustard</ItemName>
+                    </ItemNames>
+                    <HotSpots>
+                        <HotSpot XYZ="-171.517, 11.49119, -431.3546" Radius="50"/>
+                    </HotSpots>
+                </ExGather>
+            </If>
+        </While>
+    </Order>
+    <CodeChunks>
+    </CodeChunks>
+</Profile>
